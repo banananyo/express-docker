@@ -23,20 +23,26 @@ app.post('/lineBot', async (req, res, next) => {
 })
 
 const reply = (bodyResponse) => {
-  return request({
-    method: `POST`,
-    uri: `${LINE_MESSAGING_API}/reply`,
-    headers: LINE_HEADER,
-    body: JSON.stringify({
+  const body = JSON.stringify({
       replyToken: bodyResponse.events[0].replyToken,
       messages: [
         {
           type: `text`,
           text: bodyResponse.events[0].message.text
         }
-	  ]
-    })
+    ]
+    });
+
+  axios.post(`${LINE_MESSAGING_API}/reply`, body, {
+    headers: LINE_HEADER,
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
   });
+
 };
 
 app.get('/', async (req, res, next) => {
