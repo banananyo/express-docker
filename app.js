@@ -13,7 +13,7 @@ app.post('/lineBot', async (req, res, next) => {
     return;
   }
   reply(req.body);
-  res.status(200).send(eq.body.events[0].message.text);
+  res.status(200).send('It works!');
 })
 
 const reply = (bodyResponse) => {
