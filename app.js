@@ -8,7 +8,8 @@ const LINE_HEADER = {
   'Authorization': `Bearer ${TOKEN}`
 };
 app.post('/lineBot', async (req, res, next) => {
-  console.log(req)
+  console.log(req.headers)
+  console.log(req.body)
   // if (req.body.events[0].message.type !== 'text') {
   //   return;
   // }
