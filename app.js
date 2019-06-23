@@ -32,6 +32,10 @@ const reply = (bodyResponse) => {
   });
 };
 
+app.get('/', async (req, res, next) => {
+  res.status(200).send('Hello Line Bot')
+})
+
 // app.get('/', async (req, res, next) => {
 //   console.log({ auth: req.header('authorization') })
 //   res.set('token', 'test');
