@@ -7,12 +7,13 @@ const LINE_HEADER = {
   'Content-Type': 'application/json',
   'Authorization': `Bearer ${TOKEN}`
 };
-app.get('/linebot', async (req, res, next) => {
+app.post('/lineBot', async (req, res, next) => {
   console.log(req.body)
   if (req.body.events[0].message.type !== 'text') {
     return;
   }
   reply(req.body);
+  res.status(200).send(eq.body.events[0].message.text);
 })
 
 const reply = (bodyResponse) => {
