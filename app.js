@@ -33,20 +33,28 @@ app.post('/lineBot', async (req, res, next) => {
   }
   // reply(req.body);
   if (source.type === 'group' && source.groupId === groupIds[0].id ) {
-    push(userIds[0].id, [{ type: 'text', text: 'forward จาก bot group' }, message], false)
+    push(userIds[0].id, [{ type: 'text', text: 'forward จาก bot group' }, { type: 'text', text: message.text } ], false)
   } else if (source.type === 'user' && source.userId === userIds[0].id ) {
-    push(groupIds[0].id, [{ type: 'text', text: 'forward จากแชท baze' }, message], false)
+    push(groupIds[0].id, [{ type: 'text', text: 'forward จากแชท baze' }, { type: 'text', text: message.text } ], false)
   }
   res.status(200).send('It works!');
 })
 
 const push = (to, messages, notificationDisabled, type) => {
-  const body = JSON.stringify({
-    userId: type === 'user' && to,
-    groupId: type === 'group' && to,
-    messages,
-    notificationDisabled,
-  });
+  let body;
+  if (type === 'user') {
+    body = JSON.stringify({
+      userId: to,
+      messages,
+      notificationDisabled,
+      });
+  } else {
+    body = JSON.stringify({
+      groupId: to,
+      messages,
+      notificationDisabled,
+      });
+  }
   axios.post(`${LINE_MESSAGING_API}/push`, body, {
     headers: LINE_HEADER,
   })
