@@ -3,6 +3,8 @@ const bodyParser = require('body-parser')
 const axios = require('axios')
 const app = express()
 
+app.use(bodyParser.json())
+
 const TOKEN = 'L+XlfDF+f2WQ+UrLEw1bfY5w1K5wly/29W4yb57PQ8aAgSq3ammc3bT4dRf7dDxg6XyjmNQIqZFQcWKoXwWzxM4BvgsMnvjimq1STYO016nBhxJ9uRGjFL7CkyjDmt5p/3ZXWBBhhz9PQKRQ9xQfAQdB04t89/1O/w1cDnyilFU=';
 const LINE_MESSAGING_API = 'https://api.line.me/v2/bot/message';
 const LINE_HEADER = {
@@ -10,12 +12,9 @@ const LINE_HEADER = {
   'Authorization': `Bearer ${TOKEN}`
 };
 
-// parse application/json
-app.use(bodyParser.json())
-
 app.post('/lineBot', async (req, res, next) => {
-  console.log(req.headers)
-  console.log(req.body)
+  console.log({ event: req.body.events[0] });
+  console.log({ message: req.body.events[0].message });
   if (req.body.events[0].message.type !== 'text') {
     return;
   }
