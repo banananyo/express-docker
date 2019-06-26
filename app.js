@@ -37,10 +37,10 @@ const reply = (bodyResponse) => {
     headers: LINE_HEADER,
   })
   .then(function (response) {
-    console.log(response);
+    // console.log(response);
   })
   .catch(function (error) {
-    console.log(error);
+    // console.log(error);
   });
 
 };
