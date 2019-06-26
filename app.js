@@ -3,6 +3,17 @@ const bodyParser = require('body-parser')
 const axios = require('axios')
 const app = express()
 
+const userIds = [{
+    name: 'baze',
+    id: 'Ub450587db45f134affa1fb3e2a7eb71f',
+  }];
+
+const groupIds = [{
+    name: 'botGroup',
+    id: 'C7435989b0db3c18a99ab2c5722d5df40',
+  }];
+
+
 app.use(bodyParser.json())
 
 const TOKEN = 'L+XlfDF+f2WQ+UrLEw1bfY5w1K5wly/29W4yb57PQ8aAgSq3ammc3bT4dRf7dDxg6XyjmNQIqZFQcWKoXwWzxM4BvgsMnvjimq1STYO016nBhxJ9uRGjFL7CkyjDmt5p/3ZXWBBhhz9PQKRQ9xQfAQdB04t89/1O/w1cDnyilFU=';
@@ -13,14 +24,32 @@ const LINE_HEADER = {
 };
 
 app.post('/lineBot', async (req, res, next) => {
-  console.log({ event: req.body.events[0].source });
-  console.log({ message: req.body.events[0].message });
-  if (req.body.events[0].message.type !== 'text') {
+  const source = req.body.events[0].source;
+  const message = req.body.events[0].message;
+  console.log({ source });
+  console.log({ message });
+  if (message.type !== 'text') {
     return;
   }
   reply(req.body);
+  if (source.groupId && source.groupId === groupIds[0].id ) {
+    push(userIds[0].id, message.text, false)
+  } else if (source.userId && source.userId === userIds[0].id ) {
+    push(groupIds[0].id, message.text, false)
+  }
   res.status(200).send('It works!');
 })
+
+const push = (to, messages, notificationDisabled) => {
+  const body = JSON.stringify({
+    to,
+    messages,
+    notificationDisabled,
+  });
+  axios.post(`${LINE_MESSAGING_API}/push`, body, {
+    headers: LINE_HEADER,
+  })
+}
 
 const reply = (bodyResponse) => {
   const body = JSON.stringify({
@@ -51,24 +80,5 @@ app.get('/', async (req, res, next) => {
 app.post('/post', async (req, res, next) => {
   res.status(200).send('Post Line Bot')
 })
-// app.get('/', async (req, res, next) => {
-//   console.log({ auth: req.header('authorization') })
-//   res.set('token', 'test');
-//   res.status(200).send('Hello Express')
-// })
-// app.get('/request', async (req, res, next) => {
-//   http.get({
-//     hostname: 'localhost',
-//     port: 3000,
-//     path: '/',
-//     agent: false,  
-//     headers: {
-//       'authorization': 'Bearer test',
-//     }
-//   }, (response) => {
-
-//     res.status(200).send(response.headers.token);
-//   });
-// })
 
 app.listen(3000, () => console.log('Server is running on port 80'))
