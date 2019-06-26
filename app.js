@@ -49,6 +49,12 @@ const push = (to, messages, notificationDisabled) => {
   axios.post(`${LINE_MESSAGING_API}/push`, body, {
     headers: LINE_HEADER,
   })
+  .then(function (response) {
+    // console.log(response);
+  })
+  .catch(function (error) {
+    // console.log(error);
+  });
 }
 
 const reply = (bodyResponse) => {
