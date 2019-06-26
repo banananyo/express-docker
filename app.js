@@ -41,20 +41,12 @@ app.post('/lineBot', async (req, res, next) => {
 })
 
 const push = (to, messages, notificationDisabled, type) => {
-  let body;
-  if (type === 'user') {
-    body = JSON.stringify({
-      userId: to,
+  let body = JSON.stringify({
+      to,
       messages,
       notificationDisabled,
       });
-  } else {
-    body = JSON.stringify({
-      groupId: to,
-      messages,
-      notificationDisabled,
-      });
-  }
+
   axios.post(`${LINE_MESSAGING_API}/push`, body, {
     headers: LINE_HEADER,
   })
