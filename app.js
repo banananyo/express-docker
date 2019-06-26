@@ -31,10 +31,10 @@ app.post('/lineBot', async (req, res, next) => {
   if (message.type !== 'text') {
     return;
   }
-  reply(req.body);
-  if (source.groupId && source.groupId === groupIds[0].id ) {
+  // reply(req.body);
+  if (source.type === 'group' && source.groupId === groupIds[0].id ) {
     push(userIds[0].id, message.text, false)
-  } else if (source.userId && source.userId === userIds[0].id ) {
+  } else if (source.type === 'user' && source.userId === userIds[0].id ) {
     push(groupIds[0].id, message.text, false)
   }
   res.status(200).send('It works!');
