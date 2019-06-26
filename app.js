@@ -13,7 +13,7 @@ const LINE_HEADER = {
 };
 
 app.post('/lineBot', async (req, res, next) => {
-  console.log({ event: req.body.events[0] });
+  console.log({ event: req.body.events[0].source });
   console.log({ message: req.body.events[0].message });
   if (req.body.events[0].message.type !== 'text') {
     return;
