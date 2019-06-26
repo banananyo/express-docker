@@ -40,9 +40,10 @@ app.post('/lineBot', async (req, res, next) => {
   res.status(200).send('It works!');
 })
 
-const push = (to, messages, notificationDisabled) => {
+const push = (to, messages, notificationDisabled, type) => {
   const body = JSON.stringify({
-    to,
+    userId: type === 'user' && to,
+    groupId: type === 'group' && to,
     messages,
     notificationDisabled,
   });
@@ -53,7 +54,7 @@ const push = (to, messages, notificationDisabled) => {
     // console.log(response);
   })
   .catch(function (error) {
-    // console.log(error);
+    console.log(error);
   });
 }
 
@@ -75,7 +76,7 @@ const reply = (bodyResponse) => {
     // console.log(response);
   })
   .catch(function (error) {
-    // console.log(error);
+    console.log(error);
   });
 
 };
