@@ -54,7 +54,7 @@ const push = (to, messages, notificationDisabled, type) => {
     // console.log(response);
   })
   .catch(function (error) {
-    console.log(error);
+    console.log(error.data.details);
   });
 }
 
@@ -76,7 +76,7 @@ const reply = (bodyResponse) => {
     // console.log(response);
   })
   .catch(function (error) {
-    console.log(error);
+    console.log(error.data.details);
   });
 
 };
