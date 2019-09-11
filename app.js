@@ -128,4 +128,4 @@ app.post('/post', async (req, res, next) => {
   res.status(200).send('Post Line Bot')
 })
 
-app.listen(3000, () => console.log('Server is running on port 80'))
+app.listen(3000, () => console.log('Server is running on port 3000'))
